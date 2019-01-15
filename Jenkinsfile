@@ -20,7 +20,7 @@ pipeline {
     stage('Start Container'){
       steps {
         echo "CHECKING FOR Dockerfile"
-        sh 'echo "docker build . -t "foo"'
+        echo "docker build . -t foo"
       }
     }
     stage('Run Tests'){
