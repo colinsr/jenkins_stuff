@@ -14,7 +14,7 @@ pipeline {
     stage('Build Image'){
       steps {
         echo "NEED TO BOOTSTRAP DOCKER..."
-        sh 'which docker'
+        //sh 'which docker'
       }
     }
     stage('Start Container'){
