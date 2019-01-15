@@ -1,9 +1,7 @@
 pipeline {
   agent any
 
-  tools {
-
-  }
+  //tools {} DIRTBAGS
 
   stages {
     stage('Clone repo') {
