@@ -1,9 +1,17 @@
+#!groovy
+@Library('awesome-lib') _
+
 pipeline {
   agent any
 
   //tools {} DIRTBAGS
 
   stages {
+    stage('Test shared global lib') {
+      steps {
+        test 'Tyrone Biggums'
+      }
+    }
     stage('Clone repo') {
       steps {
         echo "HELLO FROM JENKINSFILE..."
