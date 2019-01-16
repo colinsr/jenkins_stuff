@@ -1,5 +1,5 @@
 #!groovy
-@Library('awesome-lib') _
+@Library('awesome-lib@master') _
 
 pipeline {
   agent any
