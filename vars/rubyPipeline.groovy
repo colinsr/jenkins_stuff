@@ -5,27 +5,49 @@ def call(Map config) {
     //tools {  }
 
     stages {
-      stage('Clone repo') {
+      stage('Checkout') {
         steps {
           echo "HELLO FROM JENKINSFILE..."
           git 'https://github.com/colinsr/jenkins_stuff.git'
         }
       }
-      stage('Build Image'){
+      stage('Build'){
         steps {
           echo "HELLO FROM JENKINSFILE..."
           //sh 'which docker'
         }
       }
-      stage('Start Container'){
-        steps {
-          echo "CHECKING FOR Dockerfile"
-          //sh 'docker build . -t "foo"'
+      stage('Test') {
+        parallel {
+          stage('Unit Test') {
+            steps {
+              echo "running rspec unit tests"
+            }
+          }
+          stage('Integration Test') {
+            steps {
+              echo "running integration tests"
+            }
+          }
         }
       }
-      stage('Run Tests'){
-        steps {
-          echo "RUNNING TESTS..."
+      stage('Compliance Checking'){
+        parallel {
+          stage('Code Analysis') {
+            steps {
+              echo "running sonarruby"
+            }
+          }
+          stage('Security Analysis') {
+            steps {
+              echo "running something anchore https://jenkins.io/blog/2018/06/20/anchore-image-scanning/"
+            }
+          }
+          stage('Other Checks') {
+            steps {
+              echo "running something else for image security"
+            }
+          }
         }
       }
       stage('Push to ACR'){
@@ -33,14 +55,37 @@ def call(Map config) {
           echo "PUSHING TO AZURE CONTAINER REPO..."
         }
       }
-      stage('Deploy to AKS'){
+      stage('Deploy to dev AKS'){
         steps {
           echo "THIS SHOULD BE DEPLOYED TO AKS..."
         }
       }
-      stage('Print a config value') {
+      stage('Dev AKS Smoketest'){
         steps {
-          echo "$config.name"
+          echo "doing fancy smoketests here"
+        }
+      }
+      stage('Deploy to integration AKS'){
+        steps {
+          echo "THIS SHOULD BE DEPLOYED TO AKS..."
+        }
+      }
+      stage('Integration AKS Smoketest'){
+        steps {
+          echo "doing fancy smoketests here"
+        }
+      }
+      stage('Production Deploy Approval'){
+        input "Deploy to prod?"
+      }
+      stage('Deploy to integration AKS'){
+        steps {
+          echo "THIS SHOULD BE DEPLOYED TO AKS..."
+        }
+      }
+      stage('Integration AKS Smoketest'){
+        steps {
+          echo "doing fancy smoketests here"
         }
       }
     }
