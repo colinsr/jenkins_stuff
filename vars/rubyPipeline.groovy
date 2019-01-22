@@ -76,7 +76,7 @@ def call(Map config) {
         }
       }
       stage('Production Deploy Approval'){
-        input "Deploy to prod?"
+        echo "input Deploy to prod?"
       }
       stage('Deploy to integration AKS'){
         steps {
