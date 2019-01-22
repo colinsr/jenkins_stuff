@@ -55,7 +55,7 @@ def call(Map config) {
           echo "PUSHING TO AZURE CONTAINER REPO..."
         }
       }
-      stage('Deploy to dev AKS'){
+      stage('Deploy to Development AKS'){
         steps {
           echo "THIS SHOULD BE DEPLOYED TO AKS..."
         }
@@ -65,7 +65,7 @@ def call(Map config) {
           echo "doing fancy smoketests here"
         }
       }
-      stage('Deploy to integration AKS'){
+      stage('Deploy to Integration AKS'){
         steps {
           echo "THIS SHOULD BE DEPLOYED TO AKS..."
         }
@@ -76,14 +76,16 @@ def call(Map config) {
         }
       }
       stage('Production Deploy Approval'){
-        echo "input Deploy to prod?"
+        steps {
+          input "Deploy to prod?"
+        }
       }
-      stage('Deploy to integration AKS'){
+      stage('Deploy to Production AKS'){
         steps {
           echo "THIS SHOULD BE DEPLOYED TO AKS..."
         }
       }
-      stage('Integration AKS Smoketest'){
+      stage('Production AKS Smoketest'){
         steps {
           echo "doing fancy smoketests here"
         }
